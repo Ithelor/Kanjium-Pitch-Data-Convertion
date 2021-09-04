@@ -9,6 +9,7 @@
 const
     FileStream = require('fs'),
     ReadLine = require('readline'),
+    wanakana = require("wanakana");
 
     readStream = FileStream.createReadStream('accents.txt'),
     writeStream = FileStream.createWriteStream('user_pitchdb.csv'),
@@ -24,8 +25,7 @@ readLine.on('line', function(line) {
         pitchArray = new Array(),
         excess = 0;
 
-        if (!reading)
-            reading = expression;
+        if (!reading) reading = wanakana.toHiragana(expression);
 
         const combiners = ['ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'ャ', 'ュ', 'ョ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ'];
         combiners.forEach(combiner => excess += reading.split(combiner).length - 1)
