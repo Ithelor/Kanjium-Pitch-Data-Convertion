@@ -1,6 +1,6 @@
 // Conversion script of Kanjium pitch accent data for Japanese Pitch Accent anki addon (148002038).
 //
-// The original version allowed multiple patterns in the pitch column. All commented code lines refer to this.
+// The original version allowed multiple patterns in the pitch column. Most commented code lines refer to this.
 // Max number of patterns in the pitch column has been limited to one since the targeted algorithm somehow
 //  doesn't seem to be working with this specific data structure despite it being similar to the original.
 //
@@ -25,7 +25,9 @@ readLine.on('line', function(line) {
         pitchArray = new Array(),
         excess = 0;
 
-        if (!reading) reading = wanakana.toHiragana(expression);
+        // The targeted algorythm requires 'reading' column to not be empty.
+        // Fires on kana-only expressions.
+        if (!reading) reading = expression;
 
         const combiners = ['ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'ャ', 'ュ', 'ョ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ'];
         combiners.forEach(combiner => excess += reading.split(combiner).length - 1)
@@ -33,8 +35,8 @@ readLine.on('line', function(line) {
     // for (var i = 0; i < pitch_splitter.length; i++) {
 
         var count = 0, 
-            pitch_final = '',
-            dropped = false;
+            pitch_final = '';
+        let dropped = false;
 
         // resolving heiban
         // if (pitch_splitter[i] == 0) {
