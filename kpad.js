@@ -36,6 +36,7 @@ readLine.on('line', function(line) {
 
         var count = 0, 
             pitch_final = '';
+            
         let dropped = false;
 
         // resolving heiban
@@ -112,9 +113,9 @@ readLine.on('line', function(line) {
                 else pitch_final += 'L';
             }
         }
+        
         pitchArray.push(pitch_final);
     // }
-
-    var pitchString = pitchArray.toString();
-    writeStream.write(expression + '\t' + reading + '\t' + pitchString + '\n');
+    
+    writeStream.write(expression + '\t' + reading + '\t' + pitchArray.toString() + '\n');
 });
